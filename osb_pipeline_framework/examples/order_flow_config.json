@@ -1,0 +1,58 @@
+{
+  "flow_name": "order_processing",
+  "description": "Process order data with validation, transformation, and routing",
+  "version": "1.0.0",
+  "stages": [
+    {
+      "name": "order_validation",
+      "type": "validation",
+      "description": "Validate order data structure",
+      "inline_schema": {
+        "required": ["order_id", "customer_id", "items", "total_amount"],
+        "properties": {
+          "order_id": {
+            "type": "string"
+          },
+          "customer_id": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array"
+          },
+          "total_amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "order_transformation",
+      "type": "transformation",
+      "description": "Transform order data",
+      "transformations": [
+        {
+          "type": "add_field",
+          "params": {
+            "name": "order_date",
+            "value": "2025-12-31"
+          }
+        },
+        {
+          "type": "uppercase",
+          "params": {
+            "field": "order_id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "order_routing",
+      "type": "routing",
+      "description": "Route order based on total amount",
+      "routing_key": "total_amount"
+    }
+  ]
+}

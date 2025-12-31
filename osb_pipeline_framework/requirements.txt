@@ -1,0 +1,12 @@
+# OSB Pipeline Framework Requirements
+
+# Core dependencies
+# No strict requirements - framework uses only Python standard library
+
+# Optional dependencies for enhanced functionality
+PyYAML>=6.0  # For YAML configuration file support
+
+# Development dependencies (optional)
+# pytest>=7.0.0  # For running tests
+# black>=22.0.0  # For code formatting
+# flake8>=4.0.0  # For linting

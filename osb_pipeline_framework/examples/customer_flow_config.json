@@ -1,0 +1,69 @@
+{
+  "flow_name": "customer_data_processing",
+  "description": "Process customer data through validation, transformation, and enrichment stages",
+  "version": "1.0.0",
+  "stages": [
+    {
+      "name": "input_validation",
+      "type": "validation",
+      "description": "Validate incoming customer data",
+      "inline_schema": {
+        "required": ["customer_id", "name", "email"],
+        "properties": {
+          "customer_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    {
+      "name": "data_transformation",
+      "type": "transformation",
+      "description": "Transform customer data to standard format",
+      "transformations": [
+        {
+          "type": "uppercase",
+          "params": {
+            "field": "name"
+          }
+        },
+        {
+          "type": "lowercase",
+          "params": {
+            "field": "email"
+          }
+        },
+        {
+          "type": "add_field",
+          "params": {
+            "name": "status",
+            "value": "processed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "data_enrichment",
+      "type": "enrichment",
+      "description": "Enrich customer data with metadata",
+      "enrichment_data": {
+        "processing_timestamp": "2025-12-31T00:00:00Z",
+        "source": "OSB_PIPELINE"
+      },
+      "merge_strategy": "update"
+    }
+  ],
+  "error_handling": {
+    "on_error": "log_and_continue",
+    "retry_count": 3
+  }
+}
