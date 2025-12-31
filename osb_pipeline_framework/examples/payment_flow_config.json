@@ -1,0 +1,57 @@
+{
+  "flow_name": "payment_processing",
+  "description": "Process payment transactions with field mapping and validation",
+  "version": "1.0.0",
+  "stages": [
+    {
+      "name": "field_mapping",
+      "type": "transformation",
+      "description": "Map payment fields to standard format",
+      "transformations": [
+        {
+          "type": "map_fields",
+          "params": {
+            "mapping": {
+              "txn_id": "transaction_id",
+              "amt": "amount",
+              "curr": "currency",
+              "cust_id": "customer_id"
+            },
+            "include_unmapped": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "payment_validation",
+      "type": "validation",
+      "description": "Validate mapped payment data",
+      "inline_schema": {
+        "required": ["transaction_id", "amount", "customer_id"],
+        "properties": {
+          "transaction_id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "customer_id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "add_metadata",
+      "type": "enrichment",
+      "description": "Add payment processing metadata",
+      "enrichment_data": {
+        "processor": "OSB_PAYMENT_GATEWAY",
+        "version": "2.0"
+      }
+    }
+  ]
+}

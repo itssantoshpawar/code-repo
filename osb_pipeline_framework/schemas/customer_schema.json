@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Customer Schema",
+  "description": "Schema for customer data validation",
+  "type": "object",
+  "required": ["customer_id", "name", "email"],
+  "properties": {
+    "customer_id": {
+      "type": "string",
+      "description": "Unique customer identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Customer full name",
+      "minLength": 1
+    },
+    "email": {
+      "type": "string",
+      "description": "Customer email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Customer phone number"
+    },
+    "age": {
+      "type": "integer",
+      "description": "Customer age",
+      "minimum": 0,
+      "maximum": 150
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "inactive", "pending", "processed"]
+    }
+  }
+}
