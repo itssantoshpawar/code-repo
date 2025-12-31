@@ -29,12 +29,25 @@ ENV/
 env/
 .venv
 
+# Java/Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
 # IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+*.iml
+.project
+.classpath
+.settings/
 
 # OS
 .DS_Store
