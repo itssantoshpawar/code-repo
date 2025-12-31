@@ -5,9 +5,15 @@ Handles loading and validation of pipeline configurations from various sources.
 """
 
 import json
-import yaml
 from typing import Dict, Any, List, Optional
 from pathlib import Path
+
+# PyYAML is optional - framework works without it
+try:
+    import yaml
+    YAML_SUPPORT = True
+except ImportError:
+    YAML_SUPPORT = False
 
 
 class ConfigurationError(Exception):
@@ -48,6 +54,10 @@ class ConfigurationManager:
         try:
             with open(path, 'r') as f:
                 if path.suffix in ['.yaml', '.yml']:
+                    if not YAML_SUPPORT:
+                        raise ConfigurationError(
+                            "YAML support requires PyYAML. Install with: pip install PyYAML"
+                        )
                     config = yaml.safe_load(f)
                 elif path.suffix == '.json':
                     config = json.load(f)

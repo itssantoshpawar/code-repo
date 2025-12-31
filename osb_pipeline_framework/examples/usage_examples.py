@@ -3,13 +3,18 @@ Example usage of the OSB Pipeline Framework
 
 This script demonstrates how to use the framework to process
 different types of data flows.
+
+To run this example:
+1. Set PYTHONPATH: export PYTHONPATH=/path/to/code-repo:$PYTHONPATH
+2. Or install the package: pip install -e /path/to/code-repo
+3. Run: python usage_examples.py
 """
 
 import sys
 import json
 from pathlib import Path
 
-# Add parent directory to path to import the framework
+# For examples only - in production, install the package properly
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from osb_pipeline_framework.core import (

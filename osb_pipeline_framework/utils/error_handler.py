@@ -13,16 +13,16 @@ class ErrorHandler:
     """
     
     def __init__(self):
-        self.error_handlers: Dict[str, Callable] = {}
+        self.error_handlers: Dict[str, Callable[[Exception, Dict[str, Any]], None]] = {}
         self.error_log: list = []
     
-    def register_error_handler(self, error_type: str, handler: Callable):
+    def register_error_handler(self, error_type: str, handler: Callable[[Exception, Dict[str, Any]], None]):
         """
         Register a custom error handler for specific error types.
         
         Args:
             error_type: Type of error to handle
-            handler: Callable that handles the error
+            handler: Callable that handles the error, takes (error, error_info) and returns None
         """
         self.error_handlers[error_type] = handler
     

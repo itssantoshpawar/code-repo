@@ -57,12 +57,20 @@ osb_pipeline_framework/
 
 ### Installation
 
+**Option 1: Direct Usage (No Installation)**
 ```bash
-# Clone the repository
-cd osb_pipeline_framework
+# Clone or download the repository
+cd code-repo
+python osb_pipeline_framework/examples/usage_examples.py
+```
 
-# Install dependencies (if any)
-# pip install -r requirements.txt  # (PyYAML for YAML support)
+**Option 2: Install as Package (Recommended)**
+```bash
+# Install in development mode
+pip install -e .
+
+# Or install with YAML support
+pip install -e .[yaml]
 ```
 
 ### Basic Usage
