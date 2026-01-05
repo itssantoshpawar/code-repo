@@ -106,6 +106,25 @@ Or run the JAR:
 java -jar target/osb-pipeline-flows-1.0.0.jar
 ```
 
+## Environment Variables
+
+The application supports the following environment variables for configuration:
+
+- `RABBITMQ_HOST`: RabbitMQ server host (default: localhost)
+- `RABBITMQ_PORT`: RabbitMQ server port (default: 5672)
+- `RABBITMQ_USERNAME`: RabbitMQ username (default: guest)
+- `RABBITMQ_PASSWORD`: RabbitMQ password (default: guest)
+
+Example with environment variables:
+
+```bash
+export RABBITMQ_HOST=rabbitmq.example.com
+export RABBITMQ_PORT=5672
+export RABBITMQ_USERNAME=myuser
+export RABBITMQ_PASSWORD=mypassword
+java -jar target/osb-pipeline-flows-1.0.0.jar
+```
+
 ## Message Flow
 
 1. **Message Reception**: Message arrives on one of the 6 input queues

@@ -50,7 +50,9 @@ public class PipelineMessageListener {
             
         } catch (Exception e) {
             log.error("Error processing message: {}", e.getMessage(), e);
-            // In production, you might want to send this to a DLQ (Dead Letter Queue)
+            // Current strategy: Log errors for monitoring and alerting
+            // TODO: In production, configure RabbitMQ Dead Letter Exchange (DLX) 
+            // for automatic routing of failed messages to a DLQ
         }
     }
     
