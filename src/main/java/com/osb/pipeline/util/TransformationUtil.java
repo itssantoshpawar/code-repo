@@ -29,8 +29,28 @@ public class TransformationUtil {
         // Add common transformation logic
         String transformed = payload.trim();
         
+        // Escape JSON special characters in the payload
+        String escapedPayload = escapeJson(transformed);
+        
         // Add metadata wrapper
-        return String.format("{\"requestId\":\"%s\",\"data\":%s}", requestId, transformed);
+        return String.format("{\"requestId\":\"%s\",\"data\":\"%s\"}", 
+            escapeJson(requestId), escapedPayload);
+    }
+    
+    /**
+     * Escape special characters for JSON string.
+     * @param input the input string
+     * @return the escaped string
+     */
+    private String escapeJson(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input.replace("\\", "\\\\")
+                    .replace("\"", "\\\"")
+                    .replace("\n", "\\n")
+                    .replace("\r", "\\r")
+                    .replace("\t", "\\t");
     }
     
     /**

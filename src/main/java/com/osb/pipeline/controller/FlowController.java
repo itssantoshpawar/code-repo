@@ -41,6 +41,18 @@ public class FlowController {
             @RequestHeader Map<String, String> headers) {
         
         String requestId = UUID.randomUUID().toString();
+        
+        // Validate queueName input to prevent injection attacks
+        if (queueName == null || queueName.isEmpty() || !isValidQueueName(queueName)) {
+            logger.warn("Invalid queue name received: {}", queueName);
+            FlowResponse errorResponse = FlowResponse.builder()
+                .status("ERROR")
+                .message("Invalid queue name format")
+                .requestId(requestId)
+                .build();
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+        
         logger.info("Received request for queue: {}, requestId: {}", queueName, requestId);
         
         try {
@@ -88,5 +100,17 @@ public class FlowController {
     @GetMapping("/health")
     public ResponseEntity<Map<String, String>> health() {
         return ResponseEntity.ok(Map.of("status", "UP"));
+    }
+    
+    /**
+     * Validate queue name format to prevent injection attacks.
+     * Queue names should only contain alphanumeric characters, hyphens, and underscores.
+     * @param queueName the queue name to validate
+     * @return true if valid, false otherwise
+     */
+    private boolean isValidQueueName(String queueName) {
+        // Queue name should match pattern: alphanumeric, hyphens, underscores
+        // Max length: 100 characters
+        return queueName.matches("^[a-zA-Z0-9_-]{1,100}$");
     }
 }
