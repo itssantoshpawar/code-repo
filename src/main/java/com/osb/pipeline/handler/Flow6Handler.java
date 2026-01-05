@@ -27,10 +27,10 @@ public class Flow6Handler extends AbstractFlowHandler {
         // Flow 6 specific processing
         String payload = request.getPayload();
         
-        // Add Flow 6 specific transformation - encode to base64-like format
+        // Add Flow 6 specific transformation - replace spaces with underscores and convert to lowercase
         String processed = payload.replace(" ", "_").toLowerCase();
         
-        logFlowInfo("Flow 6 processing: payload encoded", request);
+        logFlowInfo("Flow 6 processing: payload transformed", request);
         
         return processed;
     }
