@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mcp-service
+
+logging:
+  level:
+    com.mcp.service: DEBUG
+    org.springframework: INFO
+
+routing:
+  query:
+    queries:
+      t2r: "SELECT * FROM routing_table WHERE flow_type = 't2r'"
+      b2b: "SELECT * FROM routing_table WHERE flow_type = 'b2b'"
+      siebel: "SELECT * FROM routing_table WHERE flow_type = 'siebel'"
+      portal: "SELECT * FROM routing_table WHERE flow_type = 'portal'"
+      flow: "SELECT * FROM routing_table WHERE flow_type = 'flow'"
+      neo: "SELECT * FROM routing_table WHERE flow_type = 'neo'"
+      sync: "SELECT * FROM routing_table WHERE flow_type = 'sync'"
