@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: osb-pipeline-flows
+  
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+
+# OSB Pipeline Configuration
+osb:
+  pipelines:
+    # Pipeline 1: Order Processing Flow
+    - queue-name: order-processing-queue
+      name: Order Processing Pipeline
+      validation-enabled: true
+      schema-validation-enabled: true
+      schema-path: schemas/order-schema.xsd
+      xquery-enabled: true
+      xquery-path: xqueries/order-transform.xq
+      route-type: SERVICE
+      route-destination: http://localhost:8081/orders
+      
+    # Pipeline 2: Payment Processing Flow
+    - queue-name: payment-processing-queue
+      name: Payment Processing Pipeline
+      validation-enabled: true
+      schema-validation-enabled: true
+      schema-path: schemas/payment-schema.xsd
+      xquery-enabled: true
+      xquery-path: xqueries/payment-transform.xq
+      route-type: SERVICE
+      route-destination: http://localhost:8082/payments
+      
+    # Pipeline 3: Customer Notification Flow
+    - queue-name: customer-notification-queue
+      name: Customer Notification Pipeline
+      validation-enabled: true
+      schema-validation-enabled: false
+      xquery-enabled: false
+      route-type: QUEUE
+      route-destination: notification-output-queue
+      
+    # Pipeline 4: Inventory Update Flow
+    - queue-name: inventory-update-queue
+      name: Inventory Update Pipeline
+      validation-enabled: true
+      schema-validation-enabled: true
+      schema-path: schemas/inventory-schema.xsd
+      xquery-enabled: true
+      xquery-path: xqueries/inventory-transform.xq
+      route-type: SERVICE
+      route-destination: http://localhost:8083/inventory
+      
+    # Pipeline 5: Audit Logging Flow
+    - queue-name: audit-logging-queue
+      name: Audit Logging Pipeline
+      validation-enabled: true
+      schema-validation-enabled: false
+      xquery-enabled: false
+      route-type: QUEUE
+      route-destination: audit-output-queue
+      
+    # Pipeline 6: Error Handling Flow
+    - queue-name: error-handling-queue
+      name: Error Handling Pipeline
+      validation-enabled: true
+      schema-validation-enabled: false
+      xquery-enabled: true
+      xquery-path: xqueries/error-transform.xq
+      route-type: QUEUE
+      route-destination: error-output-queue
+
+logging:
+  level:
+    com.osb.pipeline: DEBUG
+    org.springframework.amqp: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
